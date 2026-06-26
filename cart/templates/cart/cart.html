@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container py-4">
+
+    <h2 class="fw-bold mb-4">
+        🛒 Your Cart
+    </h2>
+
+    {% if cart and cart.cart_items.all %}
+
+    <div class="row">
+
+        <!-- CART ITEMS -->
+
+        <div class="col-lg-8">
+
+            {% for item in cart.cart_items.all %}
+            <div class="swiggy-cart-item">
+
+    <div class="d-flex justify-content-between align-items-center">
+
+        <div class="d-flex align-items-center">
+
+            {% if item.product.images.first %}
+
+            <img
+                src="{{ item.product.images.first.image.url }}"
+                class="cart-food-image me-4"
+            >
+
+            {% endif %}
+
+            <div>
+
+                <h5 class="fw-bold mb-1">
+                    {{ item.product.product_name }}
+                </h5>
+
+                <p class="text-muted mb-2">
+                    ₹{{ item.product.price }}
+                </p>
+
+                <div class="quantity-box">
+
+                    <a
+                        href="{% url 'update_cart' item.uid %}?action=dec"
+                        class="quantity-btn"
+                    >
+                        -
+                    </a>
+
+                    <span class="quantity-value">
+                        {{ item.quantity }}
+                    </span>
+
+                    <a
+                        href="{% url 'update_cart' item.uid %}?action=inc"
+                        class="quantity-btn"
+                    >
+                        +
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="text-end">
+
+            <h5 class="fw-bold">
+                ₹{{ item.total_price }}
+            </h5>
+
+            <a
+                href="{% url 'remove_item' item.uid %}"
+                class="text-danger"
+            >
+                Remove
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+            {% endfor %}
+
+        </div>
+
+<!-- BILL SECTION -->
+
+<div class="col-lg-4">
+
+    <div class="bill-card">
+
+        <div class="alert alert-light mb-3">
+            🚴 Delivery in 25-30 mins
+        </div>
+
+        <h4 class="fw-bold mb-4">
+            Bill Details ({{ cart.cart_items.count }} Items)
+        </h4>
+
+        <div class="d-flex justify-content-between mb-2">
+            <span>Item Total</span>
+            <strong>₹{{ cart.total_price }}</strong>
+        </div>
+
+        <div class="d-flex justify-content-between mb-2">
+            <span>Delivery Fee</span>
+            <strong>₹40</strong>
+        </div>
+
+        <div class="d-flex justify-content-between mb-2">
+            <span>Platform Fee</span>
+            <strong>₹5</strong>
+        </div>
+
+        <hr>
+
+        <div class="d-flex justify-content-between mb-4">
+
+            <h5 class="fw-bold">
+                To Pay
+            </h5>
+
+            <h5 class="fw-bold price-highlight">
+                ₹{{ cart.total_price|add:45 }}
+            </h5>
+
+        </div>
+
+        <a
+            href="{% url 'checkout' %}"
+            class="checkout-btn text-decoration-none d-block text-center"
+        >
+            Proceed To Checkout
+        </a>
+
+    </div>
+
+</div>
+
+    </div>
+
+    {% else %}
+
+    <div class="empty-cart">
+
+        <h1>
+            🛒
+        </h1>
+
+        <h3>
+            Your Cart Is Empty
+        </h3>
+
+        <p class="text-muted">
+            Add some delicious food.
+        </p>
+
+        <a href="/" class="btn btn-success">
+
+            Browse Restaurants
+
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

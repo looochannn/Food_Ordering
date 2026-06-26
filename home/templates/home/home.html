@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<div class="hero-section text-center mb-5">
+
+    <h1 class="fw-bold display-5">
+        🍔 Order Food Online
+    </h1>
+
+    <p class="lead text-muted">
+        Discover the best restaurants near you
+    </p>
+
+    <div class="row justify-content-center mt-4">
+
+        <div class="col-md-6">
+
+            <form method="GET">
+
+                <input
+                    type="text"
+                    name="search"
+                    value="{{ request.GET.search }}"
+                    class="form-control form-control-lg"
+                    placeholder="Search restaurants..."
+                >
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Categories -->
+
+<div class="mb-5">
+
+    <h3 class="mb-3">Popular Categories</h3>
+
+    <div class="d-flex gap-3 flex-wrap">
+
+        <a
+            href="/"
+            class="category-pill text-decoration-none text-dark"
+        >
+            All
+        </a>
+
+        {% for category in categories %}
+
+        <a
+            href="?category={{ category.uid }}&search={{ request.GET.search }}"
+            class="category-pill text-decoration-none text-dark"
+        >
+            {{ category.name }}
+        </a>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+<!-- Restaurants -->
+
+<h3 class="mb-4">Popular Restaurants</h3>
+
+<div class="row">
+
+    {% for restaurant in restaurants %}
+
+    <div class="col-lg-4 col-md-6 mb-4">
+
+        <a
+            href="{% url 'restaurant_detail' restaurant.uid %}"
+            class="text-decoration-none text-dark"
+        >
+
+            <div class="card restaurant-card h-100">
+
+                <img
+                    src="{{ restaurant.image.url }}"
+                    class="card-img-top"
+                    style="height:240px; object-fit:cover;"
+                >
+
+                <div class="card-body">
+
+                    <h5 class="fw-bold">
+                        {{ restaurant.name }}
+                    </h5>
+
+                    <div class="d-flex justify-content-between">
+
+                        <span class="badge bg-success">
+                            ⭐ {{ restaurant.rating }}
+                        </span>
+
+                        {% if restaurant.is_open %}
+                            <span class="text-success">
+                                Open
+                            </span>
+                        {% else %}
+                            <span class="text-danger">
+                                Closed
+                            </span>
+                        {% endif %}
+
+                    </div>
+
+                    <p class="text-muted mt-3 mb-0">
+                        📍 {{ restaurant.address }}
+                    </p>
+
+                </div>
+
+            </div>
+
+        </a>
+
+    </div>
+
+    {% empty %}
+
+    <div class="col-12">
+
+        <div class="alert alert-warning text-center">
+
+            No restaurants found.
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

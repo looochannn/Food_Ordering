@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-8">
+
+            <div class="card shadow-lg border-0">
+
+                <div class="card-body">
+
+                    <h2 class="text-center mb-4">
+                        Checkout
+                    </h2>
+
+                    <!-- Order Summary -->
+                    <div class="alert alert-info">
+
+                        <h5>Order Summary</h5>
+
+                        <hr>
+
+                        <p>
+                            <strong>Cart Total:</strong>
+                            ₹{{ cart.total_price }}
+                        </p>
+
+                        <p>
+                            <strong>Delivery Charge:</strong>
+                            ₹45
+                        </p>
+
+                        <h4 class="text-danger">
+                            Total:
+                            ₹{{ cart.total_price|add:45 }}
+                        </h4>
+
+                    </div>
+
+                    <form method="POST">
+
+                        {% csrf_token %}
+
+                        <input type="hidden"
+                               name="latitude"
+                               id="latitude">
+
+                        <input type="hidden"
+                               name="longitude"
+                               id="longitude">
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Full Name
+                            </label>
+
+                            <input
+                                type="text"
+                                name="full_name"
+                                class="form-control"
+                                required>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Phone Number
+                            </label>
+
+                            <input
+                                type="text"
+                                name="phone"
+                                class="form-control"
+                                required>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Delivery Address
+                            </label>
+
+                            <textarea
+                                name="address"
+                                class="form-control"
+                                rows="4"
+                                required></textarea>
+
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="btn btn-success w-100">
+
+                            Proceed to Payment
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    if (navigator.geolocation) {
+
+        navigator.geolocation.getCurrentPosition(
+
+            function (position) {
+
+                document.getElementById("latitude").value =
+                    position.coords.latitude;
+
+                document.getElementById("longitude").value =
+                    position.coords.longitude;
+
+            },
+
+            function (error) {
+
+                console.log("Location access denied.");
+
+            }
+
+        );
+
+    }
+
+});
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-6">
+
+            <div class="card shadow-lg border-0">
+
+                <div class="card-body text-center">
+
+                    <h2 class="text-success mb-3">
+                        Complete Your Payment
+                    </h2>
+
+                    <hr>
+
+                    <h5>Order ID</h5>
+                    <p>{{ order.uid }}</p>
+
+                    <h5>Total Amount</h5>
+                    <h3 class="text-danger">
+                        ₹{{ order.total_amount }}
+                    </h3>
+
+                    <button id="pay-btn"
+                            class="btn btn-success btn-lg mt-3">
+                        Pay Now
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+
+var options = {
+
+    "key": "{{ razorpay_key }}",
+
+    "amount": "{{ payment.amount }}",
+
+    "currency": "INR",
+
+    "name": "FoodHub",
+
+    "description": "Food Order Payment",
+
+    "order_id": "{{ payment.id }}",
+
+    "theme": {
+        "color": "#dc3545"
+    },
+
+    "handler": function (response) {
+
+        fetch("/orders/payment-success/", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": "{{ csrf_token }}"
+            },
+
+            body: JSON.stringify({
+
+                order_id: "{{ order.uid }}",
+
+                payment_id: response.razorpay_payment_id,
+
+                razorpay_order_id: response.razorpay_order_id,
+
+                razorpay_signature: response.razorpay_signature
+
+            })
+
+        })
+        .then(response => response.json())
+        .then(data => {
+
+            if(data.status === "success"){
+
+                alert("Payment Successful!");
+
+                window.location.href = "/orders/my-orders/";
+
+            }
+
+        });
+
+    },
+
+    "modal": {
+
+        "ondismiss": function(){
+
+            alert("Payment Cancelled.");
+
+        }
+
+    }
+
+};
+
+var rzp = new Razorpay(options);
+
+document.getElementById("pay-btn").onclick = function(e){
+
+    rzp.open();
+
+    e.preventDefault();
+
+};
+
+// Automatically open Razorpay popup when page loads
+window.onload = function(){
+
+    rzp.open();
+
+};
+
+</script>
+
+{% endblock %}
