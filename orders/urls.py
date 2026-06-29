@@ -27,4 +27,9 @@ urlpatterns = [
         name="pay_pending_order"
     ),
 
+    path(
+        "payment-failed/",
+        views.payment_failed,
+        name="payment_failed"
+    ),
 ]

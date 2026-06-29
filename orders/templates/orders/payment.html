@@ -47,31 +47,46 @@
 
 var options = {
 
-    "key": "{{ razorpay_key }}",
+    key: "{{ razorpay_key }}",
 
-    "amount": "{{ payment.amount }}",
+    amount: "{{ payment.amount }}",
 
-    "currency": "INR",
+    currency: "INR",
 
-    "name": "FoodHub",
+    name: "FoodHub",
 
-    "description": "Food Order Payment",
+    description: "Food Order Payment",
 
-    "order_id": "{{ payment.id }}",
+    order_id: "{{ payment.id }}",
 
-    "theme": {
-        "color": "#dc3545"
+    prefill: {
+
+        name: "{{ order.full_name }}",
+
+        email: "{{ request.user.email }}",
+
+        contact: "{{ order.phone }}"
+
     },
 
-    "handler": function (response) {
+    theme: {
+
+        color: "#fc8019"
+
+    },
+
+    handler: function (response) {
 
         fetch("/orders/payment-success/", {
 
             method: "POST",
 
             headers: {
+
                 "Content-Type": "application/json",
+
                 "X-CSRFToken": "{{ csrf_token }}"
+
             },
 
             body: JSON.stringify({
@@ -87,14 +102,21 @@ var options = {
             })
 
         })
+
         .then(response => response.json())
+
         .then(data => {
 
-            if(data.status === "success"){
+            if (data.status === "success") {
 
                 alert("Payment Successful!");
 
                 window.location.href = "/orders/my-orders/";
+
+            }
+            else{
+
+                alert(data.status);
 
             }
 
@@ -102,11 +124,11 @@ var options = {
 
     },
 
-    "modal": {
+    modal: {
 
-        "ondismiss": function(){
+        ondismiss: function () {
 
-            alert("Payment Cancelled.");
+            window.location.href = "/orders/payment-failed/";
 
         }
 
@@ -124,7 +146,7 @@ document.getElementById("pay-btn").onclick = function(e){
 
 };
 
-// Automatically open Razorpay popup when page loads
+// Automatically open Razorpay popup
 window.onload = function(){
 
     rzp.open();

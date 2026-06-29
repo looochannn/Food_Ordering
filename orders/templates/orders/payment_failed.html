@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="card shadow-lg p-5 text-center">
+
+        <h1 class="text-danger">
+            ❌ Payment Failed
+        </h1>
+
+        <p class="mt-3">
+
+            Your payment could not be completed.
+
+        </p>
+
+        <a href="{% url 'my_orders' %}"
+
+           class="btn btn-warning mt-3">
+
+            Go To My Orders
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}
