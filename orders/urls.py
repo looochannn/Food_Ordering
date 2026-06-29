@@ -3,32 +3,28 @@ from . import views
 
 urlpatterns = [
 
-    # Checkout
     path(
-        'checkout/',
+        "checkout/",
         views.checkout,
-        name='checkout'
+        name="checkout"
     ),
 
-    # Retry payment for pending order
     path(
-        'pay/<uuid:order_id>/',
-        views.pay_pending_order,
-        name='pay_pending_order'
-    ),
-
-    # Razorpay payment success
-    path(
-        'payment-success/',
+        "payment-success/",
         views.payment_success,
-        name='payment_success'
+        name="payment_success"
     ),
 
-    # My Orders
     path(
-        'my-orders/',
+        "my-orders/",
         views.my_orders,
-        name='my_orders'
+        name="my_orders"
+    ),
+
+    path(
+        "pay/<uuid:order_id>/",
+        views.pay_pending_order,
+        name="pay_pending_order"
     ),
 
 ]

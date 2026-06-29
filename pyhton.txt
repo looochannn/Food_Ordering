@@ -1,0 +1,68 @@
+Food_ordering/
+│
+├── manage.py
+│
+├── food_ordering/
+│   ├── settings.py
+│   ├── urls.py
+│   ├── asgi.py
+│   └── wsgi.py
+│
+├── home/
+│   ├── views.py
+│   ├── urls.py
+│   └── templates/
+│       └── home/
+│           └── home.html
+│
+├── accounts/
+│   ├── views.py
+│   ├── urls.py
+│   ├── forms.py
+│   └── templates/
+│       └── accounts/
+│           ├── login.html
+│           └── register.html
+│
+├── products/
+│   ├── models.py
+│   ├── views.py
+│   ├── urls.py
+│   ├── admin.py
+│   └── templates/
+│       └── products/
+│           ├── product_list.html
+│           └── product_detail.html
+│
+├── cart/
+│   ├── models.py
+│   ├── views.py
+│   ├── urls.py
+│   └── templates/
+│       └── cart/
+│           └── cart.html
+│
+orders/
+├── models.py
+├── views.py
+├── urls.py
+└── templates/
+    └── orders/
+        ├── checkout.html
+        ├── payment.html   ← NEW
+        └── my_orders.html
+├── templates/
+│   └── base.html
+|      |______ navbar.html
+│
+├── static/
+│   ├── css/
+│   │   └── style.css
+│   │
+│   ├── js/
+│   │   └── script.js
+│   │
+│   └── images/
+│
+└── media/
+    └── product_images/

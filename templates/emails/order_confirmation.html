@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+</head>
+
+<body style="font-family:Arial;background:#f4f4f4;padding:40px;">
+
+<div style="
+max-width:650px;
+margin:auto;
+background:white;
+padding:40px;
+border-radius:20px;
+box-shadow:0 5px 20px rgba(0,0,0,.1);
+">
+
+<h1 style="color:#fc8019;">
+🍔 FoodHub
+</h1>
+
+<h2>
+Order Confirmed 🎉
+</h2>
+
+<p>
+
+Hi <strong>{{ order.full_name }}</strong>,
+
+</p>
+
+<p>
+
+Thank you for ordering from <strong>FoodHub</strong>.
+
+Your payment has been received successfully.
+
+</p>
+
+<hr>
+
+<h3>Order Details</h3>
+
+<p>
+
+<b>Order ID:</b>
+
+{{ order.uid }}
+
+</p>
+
+<p>
+
+<b>Total Paid:</b>
+
+₹{{ order.total_amount }}
+
+</p>
+
+<p>
+
+<b>Payment Status:</b>
+
+<span style="color:green;">
+{{ order.payment_status }}
+</span>
+
+</p>
+
+<p>
+
+<b>Delivery Address:</b>
+
+{{ order.address }}
+
+</p>
+
+<hr>
+
+<h3>Items Ordered</h3>
+
+<ul>
+
+{% for item in order.items.all %}
+
+<li>
+
+{{ item.product.product_name }}
+
+×
+
+{{ item.quantity }}
+
+</li>
+
+{% endfor %}
+
+</ul>
+
+<hr>
+
+<p>
+
+Your food is now being prepared.
+
+You can track your order anytime from
+
+<b>My Orders</b>.
+
+</p>
+
+<br>
+
+<p>
+
+Thank you ❤️
+
+</p>
+
+<h3 style="color:#fc8019;">
+
+Team FoodHub
+
+</h3>
+
+</div>
+
+</body>
+
+</html>

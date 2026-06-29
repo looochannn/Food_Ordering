@@ -1,0 +1,23 @@
+Hi {{ order.full_name }},
+
+Thank you for ordering from FoodHub!
+
+Your payment has been received successfully.
+
+Order ID:
+{{ order.uid }}
+
+Order Total:
+₹{{ order.total_amount }}
+
+Payment Status:
+{{ order.payment_status }}
+
+Delivery Address:
+{{ order.address }}
+
+We'll start preparing your food shortly.
+
+Thank you for choosing FoodHub!
+
+Team FoodHub    
