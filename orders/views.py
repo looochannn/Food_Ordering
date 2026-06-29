@@ -103,8 +103,7 @@ def payment_success(request):
         order.save()
 
         # NOW SAFE TO CLEAR CART
-        cart = Cart.objects.filter(user=order.user, is_paid=False).first()
-        if cart:
+        if cart := Cart.objects.filter(user=order.user, is_paid=False).first():
             cart.cart_items.all().delete()
             cart.is_paid = True
             cart.save()
