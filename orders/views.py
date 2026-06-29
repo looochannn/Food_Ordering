@@ -7,7 +7,6 @@ import razorpay
 from .models import Order, OrderItem
 from cart.models import Cart
 
-
 # -------------------------
 # CHECKOUT VIEW (CREATE ORDER + REDIRECT TO PAYMENT)
 # -------------------------
