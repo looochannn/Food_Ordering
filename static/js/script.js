@@ -1,8 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-
-    // ==========================
-    // AOS Animation
-    // ==========================
+    //
     if (typeof AOS !== "undefined") {
         AOS.init({
             duration: 700,
@@ -10,9 +7,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // ==========================
-    // Dark Mode
-    // ==========================
     const { body } = document;
     const themeToggle = document.getElementById("theme-toggle");
 
@@ -45,10 +39,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
     }
-
-    // ==========================
-    // Add To Cart (AJAX)
-    // ==========================
     document.querySelectorAll(".add-to-cart-btn").forEach(function (button) {
 
         button.addEventListener("click", function () {
@@ -86,10 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
     });
-
-    // ==========================
-    // Auto Hide Alerts
-    // ==========================
+    // hides alerts
     setTimeout(function () {
 
         document.querySelectorAll(".alert").forEach(function (alert) {
