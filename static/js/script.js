@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // ==========================
     // Dark Mode
     // ==========================
-    const body = document.body;
+    const { body } = document;
     const themeToggle = document.getElementById("theme-toggle");
 
     if (localStorage.getItem("theme") === "dark") {
@@ -53,8 +53,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         button.addEventListener("click", function () {
 
-            const url = this.dataset.url;
             const btn = this;
+            const { url } = btn.dataset;
 
             fetch(url)
                 .then(response => response.json())
