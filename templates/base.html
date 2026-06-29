@@ -8,114 +8,206 @@
     <meta charset="UTF-8">
 
     <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+          content="width=device-width, initial-scale=1">
 
-    <title>Food Ordering</title>
+    <title>
+        {% block title %}
+        FoodHub
+        {% endblock %}
+    </title>
 
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
           rel="stylesheet">
 
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css"
+          rel="stylesheet">
+
+    <!-- Main CSS -->
     <link rel="stylesheet"
           href="{% static 'css/style.css' %}">
 
 </head>
 
-<body id="body">
+<body>
 
-    {% include 'navbar.html' %}
+<!-- Background -->
+<div class="background-blur"></div>
 
-    <main class="container py-4">
+<!-- Navbar -->
+{% include "navbar.html" %}
 
-        {% block content %}
-        {% endblock %}
+<!-- Messages -->
+<div class="container mt-4">
 
-    </main>
+{% if messages %}
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    {% for message in messages %}
 
+        <div class="alert alert-{{ message.tags }} glass-alert shadow-sm">
+
+            {{ message }}
+
+        </div>
+
+    {% endfor %}
+
+{% endif %}
+
+</div>
+
+<!-- Main -->
+
+<main class="main-wrapper">
+
+    {% block content %}
+    {% endblock %}
+
+</main>
+
+<!-- Footer -->
+
+<footer class="footer mt-5">
+
+    <div class="container">
+
+        <div class="row gy-4">
+
+            <div class="col-lg-4">
+
+                <h3 class="fw-bold">
+
+                    🍔 FoodHub
+
+                </h3>
+
+                <p>
+
+                    Delicious food delivered to your doorstep.
+
+                </p>
+
+            </div>
+
+            <div class="col-lg-4">
+
+                <h5>
+
+                    Quick Links
+
+                </h5>
+
+                <ul class="list-unstyled">
+
+                    <li>
+
+                        <a href="/">
+
+                            Home
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="/cart/">
+
+                            Cart
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="{% url 'my_orders' %}">
+
+                            Orders
+
+                        </a>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <div class="col-lg-4">
+
+                <h5>
+
+                    Contact
+
+                </h5>
+
+                <p>
+
+                    support@foodhub.com
+
+                </p>
+
+                <p>
+
+                    +91 9876543210
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <hr>
+
+        <p class="text-center mb-0">
+
+            © 2026 FoodHub. All Rights Reserved.
+
+        </p>
+
+    </div>
+
+</footer>
+
+<!-- Bootstrap -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- AOS -->
+
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 
 <script>
 
-document.addEventListener("DOMContentLoaded", function () {
+AOS.init({
 
-    // ===========================
-    // AJAX ADD TO CART
-    // ===========================
+    duration:700,
 
-    document.querySelectorAll(".add-to-cart-btn").forEach(function(btn){
-
-        btn.addEventListener("click", function(){
-
-            fetch(this.dataset.url)
-            .then(response => response.json())
-            .then(data => {
-
-                document.getElementById("cart-count").innerText =
-                    data.cart_count;
-
-                this.innerText = "Added ✓";
-
-                setTimeout(() => {
-                    this.innerText = "Add";
-                }, 1000);
-
-            });
-
-        });
-
-    });
-
-    // ===========================
-    // DARK MODE
-    // ===========================
-
-    const body = document.getElementById("body");
-    const toggle = document.getElementById("theme-toggle");
-
-    if (toggle) {
-
-        // Load saved theme
-        if (localStorage.getItem("theme") === "dark") {
-
-            body.classList.add("dark-mode");
-
-            toggle.innerHTML = "☀️";
-
-            toggle.classList.remove("btn-outline-dark");
-            toggle.classList.add("btn-outline-light");
-        }
-
-        // Toggle theme
-        toggle.addEventListener("click", function(){
-
-            body.classList.toggle("dark-mode");
-
-            if(body.classList.contains("dark-mode")){
-
-                localStorage.setItem("theme","dark");
-
-                toggle.innerHTML = "☀️";
-
-                toggle.classList.remove("btn-outline-dark");
-                toggle.classList.add("btn-outline-light");
-
-            }else{
-
-                localStorage.setItem("theme","light");
-
-                toggle.innerHTML = "🌙";
-
-                toggle.classList.remove("btn-outline-light");
-                toggle.classList.add("btn-outline-dark");
-
-            }
-
-        });
-
-    }
+    once:true
 
 });
 
 </script>
+
+<!-- Main JS -->
+
+<script src="{% static 'js/script.js' %}"></script>
+
 </body>
+
 </html>

@@ -1,103 +1,187 @@
-<nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
+<nav class="navbar navbar-expand-lg navbar-glass sticky-top">
 
     <div class="container">
 
         <!-- Logo -->
-        <a class="navbar-brand fw-bold text-danger" href="/">
-            🍔 FoodHub
+        <a class="navbar-brand d-flex align-items-center" href="/">
+
+            <div class="logo-circle">
+                🍔
+            </div>
+
+            <div class="ms-2">
+
+                <span class="logo-text">
+                    FoodHub
+                </span>
+
+            </div>
+
         </a>
 
         <!-- Mobile Toggle -->
-        <button class="navbar-toggler"
+
+        <button class="navbar-toggler border-0 shadow-none"
                 type="button"
                 data-bs-toggle="collapse"
-                data-bs-target="#navbarNav"
-                aria-controls="navbarNav"
-                aria-expanded="false"
-                aria-label="Toggle navigation">
+                data-bs-target="#navbarNav">
 
-            <span class="navbar-toggler-icon"></span>
+            <i class="bi bi-list fs-2"></i>
 
         </button>
 
-        <!-- Navbar -->
         <div class="collapse navbar-collapse"
              id="navbarNav">
 
-            <ul class="navbar-nav ms-auto align-items-center">
+            <ul class="navbar-nav ms-auto align-items-lg-center">
 
                 <!-- Home -->
-                <li class="nav-item me-3">
-                    <a class="nav-link fw-semibold" href="/">
-                        🏠 Home
+
+                <li class="nav-item">
+
+                    <a class="nav-link px-3"
+                       href="/">
+
+                        <i class="bi bi-house-door"></i>
+
+                        Home
+
                     </a>
+
                 </li>
 
                 <!-- Cart -->
-                <li class="nav-item me-3">
-                    <a class="nav-link fw-semibold" href="/cart/">
-                        🛒 Cart
-                        <span class="badge bg-danger" id="cart-count">
-                            {{ cart_count }}
-                        </span>
-                    </a>
-                </li>
 
-                <!-- Dark Mode Toggle -->
-                <li class="nav-item me-3">
-                    <button id="theme-toggle"
-                            class="btn btn-outline-dark btn-sm">
-                        🌙
-                    </button>
+                <li class="nav-item">
+
+                    <a class="nav-link px-3 position-relative"
+                       href="/cart/">
+
+                        <i class="bi bi-bag"></i>
+
+                        Cart
+
+                        {% if cart_count > 0 %}
+
+                        <span class="cart-badge">
+
+                            {{ cart_count }}
+
+                        </span>
+
+                        {% endif %}
+
+                    </a>
+
                 </li>
 
                 {% if user.is_authenticated %}
 
-                <!-- User Dropdown -->
-                <li class="nav-item dropdown">
+                <!-- Orders -->
 
-                    <a class="nav-link dropdown-toggle fw-semibold"
-                       href="#"
-                       id="userDropdown"
-                       role="button"
-                       data-bs-toggle="dropdown"
-                       aria-expanded="false">
+                <li class="nav-item">
 
-                        👋 Hi, {{ user.username }}
+                    <a class="nav-link px-3"
+                       href="{% url 'my_orders' %}">
+
+                        <i class="bi bi-box-seam"></i>
+
+                        Orders
 
                     </a>
 
-                    <ul class="dropdown-menu dropdown-menu-end shadow">
+                </li>
+
+                <!-- Dark Mode -->
+
+                <li class="nav-item ms-lg-3">
+
+                    <button id="theme-toggle"
+                            class="theme-btn">
+
+                        🌙
+
+                    </button>
+
+                </li>
+
+                <!-- User Dropdown -->
+
+                <li class="nav-item dropdown ms-lg-3">
+
+                    <a class="nav-link dropdown-toggle profile-btn"
+                       href="#"
+                       data-bs-toggle="dropdown">
+
+                        <div class="profile-avatar">
+
+                            {{ user.username|first|upper }}
+
+                        </div>
+
+                        <span>
+
+                            {{ user.username }}
+
+                        </span>
+
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end glass-dropdown">
 
                         <li>
+
                             <h6 class="dropdown-header">
-                                Welcome, {{ user.username }}
+
+                                Welcome 👋
+
                             </h6>
+
                         </li>
 
                         <li>
+
                             <a class="dropdown-item"
                                href="{% url 'my_orders' %}">
-                                📦 My Orders
+
+                                <i class="bi bi-box"></i>
+
+                                My Orders
+
                             </a>
+
                         </li>
 
                         <li>
+
                             <a class="dropdown-item"
                                href="{% url 'settings' %}">
-                                ⚙️ Settings
+
+                                <i class="bi bi-gear"></i>
+
+                                Settings
+
                             </a>
+
                         </li>
 
                         <li>
+
                             <hr class="dropdown-divider">
+
                         </li>
 
                         <li>
+
                             <a class="dropdown-item text-danger"
                                href="{% url 'logout' %}">
-                                🚪 Logout
+
+                                <i class="bi bi-box-arrow-right"></i>
+
+                                Logout
+
                             </a>
+
                         </li>
 
                     </ul>
@@ -106,20 +190,39 @@
 
                 {% else %}
 
-                <!-- Login -->
-                <li class="nav-item me-2">
-                    <a class="btn btn-outline-success btn-sm"
-                       href="{% url 'login' %}">
-                        Login
-                    </a>
+                <!-- Dark Mode -->
+
+                <li class="nav-item me-lg-3">
+
+                    <button id="theme-toggle"
+                            class="theme-btn">
+
+                        🌙
+
+                    </button>
+
                 </li>
 
-                <!-- Register -->
                 <li class="nav-item">
-                    <a class="btn btn-success btn-sm"
-                       href="{% url 'register' %}">
-                        Register
+
+                    <a class="btn btn-login me-2"
+                       href="{% url 'login' %}">
+
+                        Login
+
                     </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="btn btn-register"
+                       href="{% url 'register' %}">
+
+                        Register
+
+                    </a>
+
                 </li>
 
                 {% endif %}
